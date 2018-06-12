@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		body {
+			padding-top: -15px;
+			text-align: center;
+			font-family: sans-serif;
+		}
+
+	</style>
+	<title>Reaction Tester</title>
+</head>
+<body>
+	<div id="words">
+		<h1>Test your Reactions!</h1>
+		<p>Click on the boxes and circles as quickly as you can!</p>
+		<strong><p>Your time: </p><p id="time"></p></strong>
+	</div>
+	<div id="shape"></div>
+
+	<script type="text/javascript">
+		var start = new Date().getTime();
+		window.addEventListener('DOMContentLoaded', function() {
+			makeShape();
+			shape.addEventListener('click', function() {
+				var end = new Date().getTime();
+				var timeTaken = (end - start) / 1000;
+				document.getElementById("time").textContent = timeTaken + "s";
+				document.getElementById("shape").style.display = "none";
+				setTimeout(makeShape, Math.floor(Math.random() * 2000) + 1);
+			});
+		})
+
+		function makeShape() {
+			var shape = document.getElementById("shape");
+			var randMeasure = Math.floor((Math.random() * 400) + 50);
+			var rand = Math.floor((Math.random() * 2) + 1);
+			if (rand == 1) {
+				var radius = 50;
+			}else if(rand == 2){
+				var radius = 0;
+			}
+			var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+			shape.style.width = randMeasure + "px";
+			shape.style.height = randMeasure + "px";
+			shape.style.borderRadius = radius + "%";
+			shape.style.backgroundColor = hue;
+			shape.style.position = "relative";
+			var xy = getRandomPosition(shape);
+			shape.style.top = xy[0] + "px";
+			shape.style.left = xy[1] + "px";
+			shape.style.display = "block";
+			start = new Date().getTime();
+		}
+
+
+		function getRandomPosition(shape) {
+			var x = document.body.offsetHeight - (shape.clientWidth);
+			var y = document.body.offsetWidth - (shape.clientHeight);
+			var randomX = Math.floor(Math.random()*x);
+			var randomY = Math.floor(Math.random()*y);
+			return [randomX,randomY];
+		}
+	</script>
+</body>
+</html>
